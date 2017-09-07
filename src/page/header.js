@@ -15,9 +15,9 @@ export default class Header extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>text1</Text>
-                <Text>text2</Text>
-                <Text>text3</Text>
+                <Text style={styles.item}>滤镜</Text>
+                <Text style={styles.item}>音乐</Text>
+                <Text style={styles.item}>贴纸</Text>
             </View>
         );
     }
@@ -28,7 +28,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#1D1D21',
+        backgroundColor: '#101010',
         height: 60
+    },
+    item:{
+        color: 'white'
     }
 });

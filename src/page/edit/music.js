@@ -4,12 +4,9 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-import Filter from './edit/filter';
-import Music from './edit/Music';
-import Paper from './edit/Paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class Footer extends Component {
+export default class Music extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +19,6 @@ export default class Footer extends Component {
                 <Text onPress={this.save} style={styles.item}>
                     保存
                 </Text>
-                
             </View>
         );
     }
