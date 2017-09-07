@@ -7,24 +7,24 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class Filter extends Component {
+export default class save extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showPanel: true,
             fadeAnim: new Animated.Value(0),
-            translateY: new Animated.Value(50),
+            translateY: new Animated.Value(50)
         }
     }
     render() {
         return (
-            <Animated.View style={[styles.container,{
+            <Animated.View style={[styles.container, {
                 ...this.props.style,
                 opacity: this.state.fadeAnim,
-                transform:[{translateY: this.state.translateY}]
-              }]}>
+                transform: [{ translateY: this.state.translateY }]
+            }]}>
                 <Text onPress={this.save} style={styles.item}>
-                    滤镜
+                    保存
                 </Text>
             </Animated.View>
         );
@@ -37,14 +37,12 @@ export default class Filter extends Component {
                 this.state.fadeAnim,                    // 动画中的变量值
                 {
                     toValue: 1,                         // 透明度最终变为1，即完全不透明
-                    duration: 200
                 }
             ),
             Animated.timing(
                 this.state.translateY,
                 {
-                    toValue: 0,
-                    duration: 200
+                    toValue: 0
                 }
             ),
         ]).start();
@@ -57,36 +55,26 @@ export default class Filter extends Component {
                 this.state.fadeAnim,                    // 动画中的变量值
                 {
                     toValue: 0,                         // 透明度最终变为1，即完全不透明
-                    duration: 200
                 }
             ),
             Animated.timing(
                 this.state.translateY,
                 {
-                    toValue: 200,
-                    duration: 200
+                    toValue: 200
                 }
             ),
         ]).start();
     }
-
 }
 
 const styles = StyleSheet.create({
     container: {
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#101010',
         height: 200
     },
     item: {
-        color: 'lightgray',
-        lineHeight: 30,
-        height: 30,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: 'lightgray'
-    },
-    title: {
-        color: 'lightgray'
+        color: 'white'
     }
 });
