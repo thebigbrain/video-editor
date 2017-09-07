@@ -12,20 +12,17 @@ import {
   View
 } from 'react-native';
 
+import { CameraPicker } from './js/picker';
+
 export default class VE extends Component {
+  componentDidMount () {
+    
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+          <CameraPicker></CameraPicker>
       </View>
     );
   }
@@ -48,6 +45,19 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    color: '#000',
+    padding: 10,
+    margin: 40
+  }
 });
 
 AppRegistry.registerComponent('VE', () => VE);
