@@ -8,6 +8,7 @@ import {
     ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Store from '../../store';
 
 const paperList = [{
     name: 'spider man',
@@ -29,7 +30,7 @@ export default class Paper extends Component {
             showPanel: true,
             fadeAnim: new Animated.Value(0),
             translateY: new Animated.Value(50),
-            active: -1 //该值为musicList下标，用于改变选中按钮的样式
+            active: Store.getState()['paper'] && Store.getState()['paper']['active'] || -1 //该值为musicList下标，用于改变选中按钮的样式
         }
     }
     render() {
@@ -82,12 +83,14 @@ export default class Paper extends Component {
         this.setState({
             active: index
         });
+        Store.getState()['paper']={active:index};
     };
 
     clearPaper(){
         this.setState({
             active: -1
         });
+        Store.getState()['paper']={active:-1};
     }
 
     /* 渲染完成时执行 */

@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    Animated
+    Animated,
+    TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -23,11 +24,22 @@ export default class save extends Component {
                 opacity: this.state.fadeAnim,
                 transform: [{ translateY: this.state.translateY }]
             }]}>
-                <Text onPress={this.save} style={styles.item}>
-                    保存
-                </Text>
+                <TouchableNativeFeedback
+                    accessibilityComponentType="button"
+                    accessibilityLabel={'保存'}
+                    accessibilityTraits={['button']}
+                    testID={'saveButton'}
+                    onPress={this.save}>
+                    <View style={styles.button}>
+                        <Text style={styles.text}>保存</Text>
+                    </View>
+                </TouchableNativeFeedback>
             </Animated.View>
         );
+    }
+
+    save() {
+
     }
 
     /* 渲染完成时执行 */
@@ -80,5 +92,23 @@ const styles = StyleSheet.create({
     },
     item: {
         color: 'white'
-    }
+    },
+    button: {
+        elevation: 4,
+        height: 50,
+        width: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#121212',
+        borderColor: 'red',
+        borderRadius: 25,
+        borderWidth: 1
+    },
+    text:{
+        color: 'white',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: '300',
+    },
 });

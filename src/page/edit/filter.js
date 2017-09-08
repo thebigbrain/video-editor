@@ -9,6 +9,7 @@ import {
     TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Store from '../../store';
 
 const filterButtons = ['OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1'];
 export default class Filter extends Component {
@@ -18,7 +19,7 @@ export default class Filter extends Component {
             showPanel: true,
             fadeAnim: new Animated.Value(0),
             translateY: new Animated.Value(50),
-            active: 0 //该值为filterButtons下标，用于改变选中按钮的样式
+            active: Store.getState()['filter'] && Store.getState()['filter']['active'] || 0 //该值为filterButtons下标，用于改变选中按钮的样式
         }
     }
     // static filterButtons = ['OR','F1','F2','R1'];
@@ -70,6 +71,7 @@ export default class Filter extends Component {
         this.setState({
             active: index
         });
+        Store.getState()['filter']={active:index};
     };
 
     /* 渲染完成时执行 */
