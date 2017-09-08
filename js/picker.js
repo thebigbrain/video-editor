@@ -3,10 +3,11 @@ import ImagePicker from 'react-native-image-crop-picker';
 import React, { Component } from 'react';
 import {
   View,
-  Text
+  Text,
+  StyleSheet
 } from 'react-native';
 
-// import { Video } from './video';
+import Video from 'react-native-video';
 import { VideoPlayer } from './video-player';
 
 export class CameraPicker extends Component {
@@ -23,6 +24,7 @@ export class CameraPicker extends Component {
 	      cropping: false,
 	      mediaType: 'video'
 	    }).then(video => {
+	    	this.video = video;
 	      this.setState({
 	      	source: video.path
 	      })
@@ -30,9 +32,25 @@ export class CameraPicker extends Component {
 	}
 
 	render() {
-		if(!this.state.source) return (<Text>please select a video</Text>);
+		if(!this.state.source) return (<Text>loading...</Text>);
 		return (
-			<VideoPlayer source={this.state.source}/>
+			<Video
+				style={styles.backgroundVideo}
+				source={{uri: this.state.source}}
+				resizeMode="cover" 
+       	repeat={true}
+      />
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+  backgroundVideo: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0, 
+    bottom: 0,
+    backgroundColor: '#000'
+  }
+});

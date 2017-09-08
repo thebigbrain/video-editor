@@ -5,12 +5,12 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.brentvatne.react.ReactVideoPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.shahenlibrary.RNVideoProcessingPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
+import com.ve.ffmpeg.RNFFMpegPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,9 +27,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new RNFFMpegPackage(),
             new ReactVideoPackage(),
-            new PickerPackage(),
-            new RNVideoProcessingPackage()
+            new PickerPackage()
       );
     }
   };
