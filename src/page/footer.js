@@ -22,13 +22,13 @@ export default class Footer extends Component {
         super(props);
         this.state = {
             showPanel: true,
-            editType: editType.none
+            editType: editType.paper
         }
-        setInterval(() => {
-            this.setState(preState => {
-                return { editType: (preState.editType + 1) % 4 }
-            })
-        },2000)
+        // setInterval(() => {
+        //     this.setState(preState => {
+        //         return { editType: (preState.editType + 1) % 4 }
+        //     })
+        // },2000)
     }
     render() {
         let editPage;

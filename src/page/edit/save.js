@@ -36,13 +36,15 @@ export default class save extends Component {
             Animated.timing(                            // 随时间变化而执行的动画类型
                 this.state.fadeAnim,                    // 动画中的变量值
                 {
-                    toValue: 1,                         // 透明度最终变为1，即完全不透明
+                    toValue: 1,
+                    duration: 200
                 }
             ),
             Animated.timing(
                 this.state.translateY,
                 {
-                    toValue: 0
+                    toValue: 0,
+                    duration: 200
                 }
             ),
         ]).start();
@@ -54,13 +56,15 @@ export default class save extends Component {
             Animated.timing(                            // 随时间变化而执行的动画类型
                 this.state.fadeAnim,                    // 动画中的变量值
                 {
-                    toValue: 0,                         // 透明度最终变为1，即完全不透明
+                    toValue: 0,
+                    duration: 200
                 }
             ),
             Animated.timing(
                 this.state.translateY,
                 {
-                    toValue: 200
+                    toValue: 200,
+                    duration: 200
                 }
             ),
         ]).start();
