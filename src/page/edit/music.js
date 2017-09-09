@@ -11,17 +11,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Store from '../../store';
 
 const musicList = [{
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: 'fc 热血格斗',
+    url: require('../../../resources/assets/music/Further Beyond Fighting.mp3')
 }, {
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: 'Ninja Turtles',
+    url: require('../../../resources/assets/music/Keizo Nakamura - Teenage Mutant Ninja Turtles - Overworld 1.mp3')
 }, {
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: 'fc 超级洛克人',
+    url: require('../../../resources/assets/music/luokeman.mp3')
 }, {
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: 'shadow legend',
+    url: require('../../../resources/assets/music/shadow-legend.mp3')
+}, {
+    name: 'kof 97 WINNER',
+    url: require('../../../resources/assets/music/SNKプレイモア - WINNER (Victory Demo).mp3')
+}, {
+    name: 'Super Mario Bros. 3',
+    url: require('../../../resources/assets/music/Super Mario Bros. 3 - Invisible BGM -Warning -Invisible BGM (Hurry up!).mp3')
+}, {
+    name: 'fc 坦克大战',
+    url: require('../../../resources/assets/music/waroftank.mp3')
 }]
 export default class Music extends Component {
     constructor(props) {
