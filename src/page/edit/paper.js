@@ -97,7 +97,7 @@ export default class Paper extends Component {
             active: index
         });
         Store.getState()['paper']={active:index}; //记录选择的贴纸
-        Store.dispatch({type:'SELECTEDPAPER',payload:{url:paperList[index].url}}); //派发选择贴纸事件，在视频组件中响应
+        Store.dispatch({type:'SELECTEDPAPER',payload:{url:paperList[index].url,pindex:index}}); //派发选择贴纸事件，在视频组件中响应
     };
 
     clearPaper(){
@@ -105,7 +105,7 @@ export default class Paper extends Component {
             active: -1
         });
         Store.getState()['paper']={active:-1}; //记录选择的贴纸
-        Store.dispatch({type:'SELECTEDPAPER',payload:{url:''}}); //派发选择贴纸事件，在视频组件中响应
+        Store.dispatch({type:'SELECTEDPAPER',payload:{url:'',pindex:-1}}); //派发选择贴纸事件，在视频组件中响应
     }
 
     /* 渲染完成时执行 */
