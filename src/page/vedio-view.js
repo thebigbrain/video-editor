@@ -46,10 +46,7 @@ const paperList = ['http://image.tianjimedia.com/uploadImages/2011/160/CLZ4E2B3V
     'http://image.tianjimedia.com/uploadImages/2011/160/5H2W47FKBNMX.jpg',
     'http://image.tianjimedia.com/uploadImages/2011/160/UODWE0LN56L5.jpg',
     'http://image.tianjimedia.com/uploadImages/2011/160/MXAXCL54W24Y.jpg',
-    'http://image.tianjimedia.com/uploadImages/2011/160/C07Y00Y75391.jpg',
-    'http://image.tianjimedia.com/uploadImages/2011/160/KGNG0RCMZ78J.jpg',
-    'http://image.tianjimedia.com/uploadImages/2011/160/I21YC715Q6J0.jpg',
-    'http://image.tianjimedia.com/uploadImages/2011/160/58V45DZN9G09.jpg']
+    'http://image.tianjimedia.com/uploadImages/2011/160/I21YC715Q6J0.jpg']
 
 export default class VedioView extends Component {
     constructor(props) {
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: (width - (width / height) * (height - 60 - 200 - 60)) / 2,
-        width: 60,
-        height: 60
+        width: 120,
+        height: 120
     }
 });
