@@ -126,11 +126,11 @@ export default class Music extends Component {
     play(url) {
         this.stop();
         if (!!url) {
-            const s = new Sound(url, Sound.MAIN_BUNDLE, (e) => {
+            const s = new Sound(url, (e) => {
                 if (e) {
                     console.log('error', e);
+                    return;
                 }
-                alert('eroor'+e);
                 s.setNumberOfLoops(-1);
                 s.play();
             });
