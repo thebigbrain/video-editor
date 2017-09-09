@@ -41,7 +41,7 @@ export default class Music extends Component {
             fadeAnim: new Animated.Value(0),
             translateY: new Animated.Value(50),
             active: Store.getState()['music'] && Store.getState()['music']['active'] || -1, //该值为musicList下标，用于改变选中按钮的样式
-            sound: ''
+            sound: Store.getState()['music'] && Store.getState()['music']['sound'] || ''
         }
     }
     render() {
@@ -94,12 +94,20 @@ export default class Music extends Component {
         </View>
     </TouchableNativeFeedback>;
 
+    setStoreData(data) {
+        if(!!Store.getState()['music']){
+            Store.getState()['music'] = {...Store.getState()['music'],...data};
+        }else{
+            Store.getState()['music'] = data;
+        }
+    }
+
     onButtonPress = index => {
         console.log('ss:', musicList[index]);
         this.setState({
             active: index
         });
-        Store.getState()['music'] = { active: index }; //记录选择音乐
+        this.setStoreData({ active: index }); //记录选择音乐
         Store.dispatch({ type: 'SELECTEDMUSIC', payload: { url: musicList[index].url } }) //派发选择音乐事件，在视频组件中响应
         this.play(musicList[index].url); //播放音乐
     };
@@ -107,7 +115,7 @@ export default class Music extends Component {
         this.setState({
             active: -1
         });
-        Store.getState()['music'] = { active: -1 }; //记录选择音乐
+        this.setStoreData({ active: -1 }); //记录选择音乐
         Store.dispatch({ type: 'SELECTEDMUSIC', payload: { url: '' } }) //派发选择音乐事件，在视频组件中响应
         this.play(''); //暂停音乐
     }
@@ -120,6 +128,7 @@ export default class Music extends Component {
             .stop()
             .release();
         this.setState({ sound: null });
+        this.setStoreData({ sound: '' }); //记录播放音乐
     }
 
 
@@ -135,6 +144,7 @@ export default class Music extends Component {
                 s.play();
             });
             this.setState({ sound: s });
+            this.setStoreData({ sound: s }); //记录播放音乐
         }
     }
 
