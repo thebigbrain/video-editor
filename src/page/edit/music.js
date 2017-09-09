@@ -8,6 +8,7 @@ import {
     ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Store from '../../store';
 
 const musicList = [{
     name: 'spider man',
@@ -29,10 +30,24 @@ export default class Music extends Component {
             showPanel: true,
             fadeAnim: new Animated.Value(0),
             translateY: new Animated.Value(50),
-            active: -1 //该值为musicList下标，用于改变选中按钮的样式
+            active: Store.getState()['music'] && Store.getState()['music']['active'] || -1 //该值为musicList下标，用于改变选中按钮的样式
         }
     }
     render() {
+        let selectedMusic = this.state.active != -1 ? <View style={{marginLeft:10,marginRight:10,flexDirection:'row',justifyContent:'space-between'}}>
+                                                        <Text style={{color:'white',flex:1}}>
+                                                            {musicList[this.state.active].name}
+                                                        </Text>
+                                                        <TouchableNativeFeedback
+                                                            onPress={this.clearMusic.bind(this)}>
+                                                            <View style={[styles.button, {height:20}]}>
+                                                                <Text style={styles.text}>删除</Text>
+                                                            </View>
+                                                        </TouchableNativeFeedback>
+                                                    </View> :  
+                                                    <Text style={{color:'white'}}>
+                                                        请选择音乐
+                                                    </Text>;
         return (
             <Animated.View style={[styles.container, {
                 ...this.props.style,
@@ -45,9 +60,7 @@ export default class Music extends Component {
                     </Text>
                 </View>
                 <View style={[{ height: 70, marginLeft: 10, marginRight: 10, justifyContent: 'center', alignItems: 'center' }]}>
-                    <Text style={{color:'white'}}>
-                        请选择音乐
-                    </Text>
+                    {selectedMusic}
                 </View>
                 <View style={[styles.item, { height: 60, marginLeft: 10, marginRight: 10 }]}>
                     <ScrollView horizontal={true} contentContainerStyle={styles.contentContainer}>
@@ -75,7 +88,14 @@ export default class Music extends Component {
         this.setState({
             active: index
         });
+        Store.getState()['music']={active:index};
     };
+    clearMusic() {
+        this.setState({
+            active: -1
+        });
+        Store.getState()['music']={active:-1};
+    }
 
     /* 渲染完成时执行 */
     componentDidMount() {
