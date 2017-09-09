@@ -40,22 +40,32 @@ const FilterMap = [
     'boxblur=2:1:cr=0:ar=0',
 ];
 
+const paperList = ['../../resources/assets/img/ys1.jpg',
+    '../../resources/assets/img/ys2.jpg',
+    '../../resources/assets/img/ys3.jpg',
+    '../../resources/assets/img/ys4.jpg',
+    '../../resources/assets/img/ys5.jpg',
+    '../../resources/assets/img/ys6.jpg',
+    '../../resources/assets/img/ys7.jpg',
+    '../../resources/assets/img/ys8.jpg']
+
 export default class VedioView extends Component {
     constructor(props) {
         super(props);
         this.state = {
             viewType: viewType.fullScreen_vertical,
             paper: '',
+            pindex: -1,
             music: '',
             filter: 0
         }
     }
     render() {
-        let image = !!this.state.paper ? <Image source={this.state.paper} style={styles.paper}/> : <Text></Text>;
+        let image = !!this.state.paper ? <Image source={this.state.paper} style={styles.paper} /> : <Text></Text>;
         return (
             <TouchableNativeFeedback onPress={this.clearEdit.bind(this)}>
                 <View style={styles.container}>
-                    <CameraPicker ref={ (ref) => { this.cameraPickerRef = ref } }/>
+                    <CameraPicker ref={(ref) => { this.cameraPickerRef = ref }} />
                     {image}
                 </View>
             </TouchableNativeFeedback>
@@ -67,19 +77,19 @@ export default class VedioView extends Component {
     }
 
     componentDidMount() {
-        DeviceEventEmitter.addListener('start', function(e: Event) {
+        DeviceEventEmitter.addListener('start', function (e: Event) {
             console.log(e);
         });
 
-        DeviceEventEmitter.addListener('process', function(e: Event) {
+        DeviceEventEmitter.addListener('process', function (e: Event) {
             console.log(e);
         });
 
-        DeviceEventEmitter.addListener('fail', function(e: Event) {
+        DeviceEventEmitter.addListener('fail', function (e: Event) {
             console.log(e);
         });
 
-        DeviceEventEmitter.addListener('success', function(e: Event) {
+        DeviceEventEmitter.addListener('success', function (e: Event) {
             console.log(e);
         });
 
@@ -88,32 +98,33 @@ export default class VedioView extends Component {
             this.cameraPickerRef.update(target);
         });
 
-        DeviceEventEmitter.addListener('error', function(e: Event) {
+        DeviceEventEmitter.addListener('error', function (e: Event) {
             console.log(e);
         });
 
         Store.subscribe('SELECTEDPAPER', ((payload) => {
-            this.setState({ paper: payload.url })
+            this.setState({ paper: payload.url, pindex: payload.pindex })
         }).bind(this))
-        
+
         Store.subscribe('SELECTEDMUSIC', ((payload) => {
             this.setState({ music: payload.url })
         }).bind(this))
-        
+
         Store.subscribe('SELECTEDFILTER', ((payload) => {
-            this.setState({ filter: payload.filter })
+            this.setState({ filter: payload.filter });
         }).bind(this))
-        
+
         Store.subscribe('SAVEVEDIO', ((payload) => {
             let source = this.cameraPickerRef.video.path;
             let target = `VE-${new Date().getTime()}.mp4`;
-            if(!!this.state.paper){
-                FFMpeg.addLogo(source, paper, target);
+            this.setState({ target: target });
+            if (-1 != this.state.pindex) {
+                FFMpeg.addLogo(source, paperList[this.state.pindex], target);
             }
-            if(!!this.state.music){
+            if (!!this.state.music) {
                 //add bgm
             }
-            if(0 != this.state.filter){
+            if (0 != this.state.filter) {
                 // add filter
                 FFMpeg.run(`-i ${source} -vf ${FilterMap[this.state.filter]} ${target}`);
             }
@@ -128,10 +139,10 @@ export default class VedioView extends Component {
     }
 }
 
-let {width,height} = Dimensions.get("window");
+let { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#000',
@@ -141,7 +152,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: (width - (width / height) * (height - 60 - 200 - 60)) / 2,
-        width:60,
-        height:60
+        width: 60,
+        height: 60
     }
 });
