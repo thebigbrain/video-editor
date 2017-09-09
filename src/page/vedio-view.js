@@ -23,7 +23,7 @@ const viewType = {
     circle: 6
 }
 
-const FilterMap = [
+const FilterMap = [,
     'boxblur=2:1:cr=0:ar=0', 
     'drawbox=color=pink@0.5:t=max', 
     'drawgrid=width=100:height=100:thickness=2:color=red@0.5'
@@ -73,9 +73,9 @@ export default class VedioView extends Component {
             console.log(e);
         });
 
-        DeviceEventEmitter.addListener('finish', function(e: Event) {
-            console.log(e);
-            this.cameraPickerRef.setState({source: target});
+        DeviceEventEmitter.addListener('finish', target => {
+            console.log(target);
+            this.cameraPickerRef.update(target);
         });
 
         DeviceEventEmitter.addListener('error', function(e: Event) {
