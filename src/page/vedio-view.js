@@ -23,6 +23,12 @@ const viewType = {
     circle: 6
 }
 
+const FilterMap = [
+    'boxblur=2:1:cr=0:ar=0', 
+    'drawbox=color=pink@0.5:t=max', 
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5'
+];
+
 export default class VedioView extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +36,8 @@ export default class VedioView extends Component {
             viewType: viewType.fullScreen_vertical,
             paper: '',
             music: '',
-            filter: 0
+            filter: 0,
+            target: ''
         }
     }
     render() {
@@ -68,6 +75,7 @@ export default class VedioView extends Component {
 
         DeviceEventEmitter.addListener('finish', function(e: Event) {
             console.log(e);
+            this.cameraPickerRef.setState({source: target});
         });
 
         DeviceEventEmitter.addListener('error', function(e: Event) {
@@ -89,14 +97,16 @@ export default class VedioView extends Component {
         Store.subscribe('SAVEVEDIO', ((payload) => {
             let source = this.cameraPickerRef.video.path;
             let target = `VE-${new Date().getTime()}.mp4`;
-            if(!!paper){
+            this.setState({target: target});
+            if(!!this.state.paper){
                 FFMpeg.addLogo(source, paper, target);
             }
-            if(!!music){
+            if(!!this.state.music){
                 //add bgm
             }
-            if(0 != filter){
+            if(0 != this.state.filter){
                 // add filter
+                FFMpeg.run(`-i ${source} -vf ${FilterMap[this.state.filter]} ${target}`);
             }
         }).bind(this))
     }
