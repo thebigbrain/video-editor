@@ -23,7 +23,7 @@ export default class Footer extends Component {
         super(props);
         this.state = {
             showPanel: true,
-            editType: editType.paper
+            editType: editType.none
         }
         // setInterval(() => {
         //     this.setState(preState => {

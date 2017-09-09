@@ -96,14 +96,16 @@ export default class Paper extends Component {
         this.setState({
             active: index
         });
-        Store.getState()['paper']={active:index};
+        Store.getState()['paper']={active:index}; //记录选择的贴纸
+        Store.dispatch({type:'SELECTEDPAPER',payload:{url:paperList[index].url}}); //派发选择贴纸事件，在视频组件中响应
     };
 
     clearPaper(){
         this.setState({
             active: -1
         });
-        Store.getState()['paper']={active:-1};
+        Store.getState()['paper']={active:-1}; //记录选择的贴纸
+        Store.dispatch({type:'SELECTEDPAPER',payload:{url:''}}); //派发选择贴纸事件，在视频组件中响应
     }
 
     /* 渲染完成时执行 */

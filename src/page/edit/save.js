@@ -7,6 +7,7 @@ import {
     TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Store from '../../store';
 
 export default class save extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ export default class save extends Component {
     }
 
     save() {
-
+        Store.dispatch({type:'SAVEVEDIO',payload:{}}); //派发保存视频动作
     }
 
     /* 渲染完成时执行 */
@@ -95,13 +96,13 @@ const styles = StyleSheet.create({
     },
     button: {
         elevation: 4,
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#121212',
         borderColor: 'red',
-        borderRadius: 25,
+        borderRadius: 30,
         borderWidth: 1
     },
     text:{
