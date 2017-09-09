@@ -117,6 +117,10 @@ export default class Paper extends Component {
                 }
             ),
         ]).start();
+        
+        Store.subscribe('CLEARPAPER', ((payload) => {
+            this.setState({ active: -1 })
+        }).bind(this))
     }
 
     /* 卸载组件时执行 */

@@ -27,15 +27,15 @@ const viewType = {
 
 const FilterMap = [
     ,
-    'boxblur=2:1:cr=0:ar=0', 
-    'drawbox=color=pink@0.5:t=max', 
+    'boxblur=2:1:cr=0:ar=0',
+    'drawbox=color=pink@0.5:t=max',
     'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
-    'drawbox=color=pink@0.5:t=max', 
+    'drawbox=color=pink@0.5:t=max',
     'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
     'boxblur=2:1:cr=0:ar=0',
     'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
     'boxblur=2:1:cr=0:ar=0',
-    'drawbox=color=pink@0.5:t=max', 
+    'drawbox=color=pink@0.5:t=max',
     'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
     'boxblur=2:1:cr=0:ar=0',
     'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
@@ -67,7 +67,7 @@ export default class VedioView extends Component {
                 <View style={styles.container}>
                     <CameraPicker ref={(ref) => { this.cameraPickerRef = ref }} />
                     {image}
-                    
+
                 </View>
             </TouchableNativeFeedback>
         );
@@ -79,35 +79,39 @@ export default class VedioView extends Component {
 
     componentDidMount() {
         DeviceEventEmitter.addListener('start', e => {
-            this.setState({modalVisible: true });
-            Store.dispatch({type:'CREATEVEDIO',payload:{showText:true,section:1}});
+            this.setState({ modalVisible: true });
+            Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 1 } });
         });
 
         DeviceEventEmitter.addListener('process', function (e: Event) {
             console.log(e);
-            Store.dispatch({type:'CREATEVEDIO',payload:{showText:true,section:2}});
+            Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 2 } });
         });
 
         DeviceEventEmitter.addListener('fail', function (e: Event) {
             console.log(e);
-            Store.dispatch({type:'CREATEVEDIO',payload:{showText:true,section:0}});
+            Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 0 } });
+            Store.dispatch({ type: 'CLEARPAPER', payload: {} });
         });
 
         DeviceEventEmitter.addListener('success', function (e: Event) {
             console.log(e);
-            Store.dispatch({type:'CREATEVEDIO',payload:{showText:true,section:3}});
+            Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 3 } });
+            Store.dispatch({ type: 'CLEARPAPER', payload: {} });
         });
 
         DeviceEventEmitter.addListener('finish', target => {
             console.log(target);
-            this.setState({modalVisible: true });
+            this.setState({ modalVisible: true });
             this.cameraPickerRef.update(target);
-            Store.dispatch({type:'CREATEVEDIO',payload:{showText:true,section:4}});
+            Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 4 } });
+            Store.dispatch({ type: 'CLEARPAPER', payload: {} });
         });
 
         DeviceEventEmitter.addListener('error', function (e: Event) {
             console.log(e);
-            Store.dispatch({type:'CREATEVEDIO',payload:{showText:true,section:0}});
+            Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 0 } });
+            Store.dispatch({ type: 'CLEARPAPER', payload: {} });
         });
 
         Store.subscribe('SELECTEDPAPER', ((payload) => {
