@@ -13,6 +13,12 @@ import Video from 'react-native-video';
 import { CameraPicker } from './picker';
 import FFMpeg from './ffmpeg';
 
+const FilterMap = {
+  'boxblur': 'boxblur=2:1:cr=0:ar=0',
+  'colorbalance': 'colorbalance=rs=.3',
+  'colorchannelmixer': 'colorchannelmixer=.3:.4:.3:0:.3:.4:.3:0:.3:.4:.3',
+};
+
 export default class VE extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +66,7 @@ export default class VE extends Component {
   onPressAddFilter () {
     let source = this.cameraPickerRef.video.path;
     let target = `VE-${new Date().getTime()}.mp4`;
-    FFMpeg.run(`-f lavfi -i ${source} ${target}`);
+    FFMpeg.run(`-i ${source} -vf ${FilterMap.colorchannelmixer} ${target}`);
   }
 
   render() {
@@ -68,8 +74,8 @@ export default class VE extends Component {
       <View style={styles.container}>
         <CameraPicker ref={ (ref) => { this.cameraPickerRef = ref } }/>
         <Button
-          onPress={this.onPressAddLogo.bind(this)}
-          title="Add Logo"
+          onPress={this.onPressAddFilter.bind(this)}
+          title="Add Filter"
           color="#841584"
           accessibilityLabel="Learn more about this purple button"
         />

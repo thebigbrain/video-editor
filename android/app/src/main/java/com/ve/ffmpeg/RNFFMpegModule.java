@@ -95,7 +95,7 @@ public class RNFFMpegModule extends ReactContextBaseJavaModule {
 
   private String fixPath(String output) {
     File folder = new File(Environment.getExternalStorageDirectory() + 
-                             File.separator + "VE");
+                             File.separator + "DCIM" + File.separator + "VE");
     boolean success = true;
     if (!folder.exists()) {
         success = folder.mkdirs();
