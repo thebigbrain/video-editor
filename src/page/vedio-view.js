@@ -6,6 +6,8 @@ import {
     StyleSheet,
     Button,
     Image,
+    Modal,
+    ProgressBar,
     TouchableNativeFeedback,
     Dimensions
 } from 'react-native';
@@ -57,7 +59,8 @@ export default class VedioView extends Component {
             paper: '',
             pindex: -1,
             music: '',
-            filter: 0
+            filter: 0,
+            modalVisible: false
         }
     }
     render() {
@@ -67,6 +70,7 @@ export default class VedioView extends Component {
                 <View style={styles.container}>
                     <CameraPicker ref={(ref) => { this.cameraPickerRef = ref }} />
                     {image}
+                    
                 </View>
             </TouchableNativeFeedback>
         );
@@ -77,8 +81,8 @@ export default class VedioView extends Component {
     }
 
     componentDidMount() {
-        DeviceEventEmitter.addListener('start', function (e: Event) {
-            console.log(e);
+        DeviceEventEmitter.addListener('start', e => {
+            this.setState({modalVisible: true });
         });
 
         DeviceEventEmitter.addListener('process', function (e: Event) {
@@ -95,6 +99,7 @@ export default class VedioView extends Component {
 
         DeviceEventEmitter.addListener('finish', target => {
             console.log(target);
+            this.setState({modalVisible: true });
             this.cameraPickerRef.update(target);
         });
 
@@ -117,7 +122,6 @@ export default class VedioView extends Component {
         Store.subscribe('SAVEVEDIO', ((payload) => {
             let source = this.cameraPickerRef.video.path;
             let target = `VE-${new Date().getTime()}.mp4`;
-            this.setState({ target: target });
             if (-1 != this.state.pindex) {
                 FFMpeg.addLogo(source, paperList[this.state.pindex], target);
             }
