@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import {
     DeviceEventEmitter,
     View,
+    Text,
     StyleSheet,
-    Button
+    Button,
+    Image,
+    TouchableNativeFeedback
 } from 'react-native';
 
 import { CameraPicker } from '../../js/picker';
 import FFMpeg from '../../js/ffmpeg';
+import Store from '../store';
 
 const viewType = {
     fullScreen_vertical: 1,
@@ -22,21 +26,26 @@ export default class VedioView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            viewType: viewType.fullScreen_vertical
+            viewType: viewType.fullScreen_vertical,
+            paper: '',
+            music: '',
+            filter: 0
         }
     }
     render() {
+        let image = !!this.state.paper ? <Image source={this.state.paper} style={styles.paper}/> : <Text></Text>;
         return (
-            <View style={styles.container}>
-                <CameraPicker ref={ (ref) => { this.cameraPickerRef = ref } }/>
-                <Button
-                  onPress={this.onPressAddLogo.bind(this)}
-                  title="Add Logo"
-                  color="#841584"
-                  accessibilityLabel="Learn more about this purple button"
-                />
-            </View>
+            <TouchableNativeFeedback onPress={this.clearEdit.bind(this)}>
+                <View style={styles.container}>
+                    <CameraPicker ref={ (ref) => { this.cameraPickerRef = ref } }/>
+                    {image}
+                </View>
+            </TouchableNativeFeedback>
         );
+    }
+
+    clearEdit() {
+        Store.dispatch({ type: 'CHECKEDIT', payload: { editType: 0 } });
     }
 
     componentDidMount() {
@@ -63,6 +72,32 @@ export default class VedioView extends Component {
         DeviceEventEmitter.addListener('error', function(e: Event) {
             console.log(e);
         });
+
+        Store.subscribe('SELECTEDPAPER', ((payload) => {
+            this.setState({ paper: payload.url })
+        }).bind(this))
+        
+        Store.subscribe('SELECTEDMUSIC', ((payload) => {
+            this.setState({ music: payload.url })
+        }).bind(this))
+        
+        Store.subscribe('SELECTEDFILTER', ((payload) => {
+            this.setState({ filter: payload.filter })
+        }).bind(this))
+        
+        Store.subscribe('SAVEVEDIO', ((payload) => {
+            let source = this.cameraPickerRef.video.path;
+            let target = `VE-${new Date().getTime()}.mp4`;
+            if(!!paper){
+                FFMpeg.addLogo(source, paper, target);
+            }
+            if(!!music){
+                //add bgm
+            }
+            if(0 != filter){
+                // add filter
+            }
+        }).bind(this))
     }
 
     onPressAddLogo() {
@@ -78,6 +113,13 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#eee'
+        backgroundColor: '#000',
+        position: 'relative'
+    },
+    paper: {
+        position: 'absolute',
+        bottom: 0,
+        width:60,
+        height:60
     }
 });

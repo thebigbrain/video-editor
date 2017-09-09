@@ -42,7 +42,7 @@ export default class Filter extends Component {
               </View>
               <View style={[styles.item,{height:40,marginLeft:10,marginRight:10,flexDirection:'row',justifyContent:'space-between'}]}>
                 <Text style={[styles.title,{width:90}]}>
-                    透明度
+                    选择滤镜类型
                 </Text>
                 <Text style={{flex:1}}>
                 
@@ -72,6 +72,7 @@ export default class Filter extends Component {
             active: index
         });
         Store.getState()['filter']={active:index};
+        Store.dispatch({type:'SELECTEDFILTER',payload:{filter:index}});
     };
 
     /* 渲染完成时执行 */

@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Store from '../../store';
+import Sound from 'react-native-sound';
 
 const musicList = [{
     name: 'fc 热血格斗',
-    url: require('../../../resources/assets/music/Further Beyond Fighting.mp3')
+    url: require('../../../resources/assets/music/FurtherBeyondFighting.mp3')
 }, {
     name: 'Ninja Turtles',
-    url: require('../../../resources/assets/music/Keizo Nakamura - Teenage Mutant Ninja Turtles - Overworld 1.mp3')
+    url: require('../../../resources/assets/music/NinjaTurtles.mp3')
 }, {
     name: 'fc 超级洛克人',
     url: require('../../../resources/assets/music/luokeman.mp3')
@@ -24,14 +25,14 @@ const musicList = [{
     url: require('../../../resources/assets/music/shadow-legend.mp3')
 }, {
     name: 'kof 97 WINNER',
-    url: require('../../../resources/assets/music/SNKプレイモア - WINNER (Victory Demo).mp3')
+    url: require('../../../resources/assets/music/SNKKOF.mp3')
 }, {
     name: 'Super Mario Bros. 3',
-    url: require('../../../resources/assets/music/Super Mario Bros. 3 - Invisible BGM -Warning -Invisible BGM (Hurry up!).mp3')
+    url: require('../../../resources/assets/music/SuperMarioBros3.mp3')
 }, {
     name: 'fc 坦克大战',
     url: require('../../../resources/assets/music/waroftank.mp3')
-}]
+}];
 export default class Music extends Component {
     constructor(props) {
         super(props);
@@ -39,23 +40,24 @@ export default class Music extends Component {
             showPanel: true,
             fadeAnim: new Animated.Value(0),
             translateY: new Animated.Value(50),
-            active: Store.getState()['music'] && Store.getState()['music']['active'] || -1 //该值为musicList下标，用于改变选中按钮的样式
+            active: Store.getState()['music'] && Store.getState()['music']['active'] || -1, //该值为musicList下标，用于改变选中按钮的样式
+            sound: ''
         }
     }
     render() {
-        let selectedMusic = this.state.active != -1 ? <View style={{marginLeft:10,marginRight:10,flexDirection:'row',justifyContent:'space-between'}}>
-                                                        <Text style={{color:'white',flex:1}}>
-                                                            {musicList[this.state.active].name}
-                                                        </Text>
-                                                        <TouchableNativeFeedback
-                                                            onPress={this.clearMusic.bind(this)}>
-                                                            <View style={[styles.button, {height:20}]}>
-                                                                <Text style={styles.text}>删除</Text>
-                                                            </View>
-                                                        </TouchableNativeFeedback>
-                                                    </View> :  
-                                                    <Text style={{color:'white'}}>
-                                                        请选择音乐
+        let selectedMusic = this.state.active != -1 ? <View style={{ marginLeft: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ color: 'white', flex: 1 }}>
+                {musicList[this.state.active].name}
+            </Text>
+            <TouchableNativeFeedback
+                onPress={this.clearMusic.bind(this)}>
+                <View style={[styles.button, { height: 20 }]}>
+                    <Text style={styles.text}>删除</Text>
+                </View>
+            </TouchableNativeFeedback>
+        </View> :
+            <Text style={{ color: 'white' }}>
+                请选择音乐
                                                     </Text>;
         return (
             <Animated.View style={[styles.container, {
@@ -63,7 +65,7 @@ export default class Music extends Component {
                 opacity: this.state.fadeAnim,
                 transform: [{ translateY: this.state.translateY }]
             }]}>
-                <View style={[styles.item,{ height: 40, borderBottomWidth: 1, borderBottomColor: '#7B7B7B' }]}>
+                <View style={[styles.item, { height: 40, borderBottomWidth: 1, borderBottomColor: '#7B7B7B' }]}>
                     <Text style={styles.title}>
                         添加音乐
                     </Text>
@@ -81,29 +83,59 @@ export default class Music extends Component {
     }
 
     createMusicButton = (data, i) => <TouchableNativeFeedback
-                                        key={'musicButton' + i}
-                                        accessibilityComponentType="button"
-                                        accessibilityLabel={data.name}
-                                        accessibilityTraits={['button']}
-                                        testID={'musicButton' + i}
-                                        onPress={this.onButtonPress.bind(this, i)}>
-                                        <View style={[styles.button, i == this.state.active ? styles.active : '']}>
-                                            <Text style={styles.text}>{data.name.toUpperCase()}</Text>
-                                        </View>
-                                    </TouchableNativeFeedback>;
+        key={'musicButton' + i}
+        accessibilityComponentType="button"
+        accessibilityLabel={data.name}
+        accessibilityTraits={['button']}
+        testID={'musicButton' + i}
+        onPress={this.onButtonPress.bind(this, i)}>
+        <View style={[styles.button, i == this.state.active ? styles.active : '']}>
+            <Text style={styles.text}>{data.name.toUpperCase()}</Text>
+        </View>
+    </TouchableNativeFeedback>;
 
     onButtonPress = index => {
         console.log('ss:', musicList[index]);
         this.setState({
             active: index
         });
-        Store.getState()['music']={active:index};
+        Store.getState()['music'] = { active: index }; //记录选择音乐
+        Store.dispatch({ type: 'SELECTEDMUSIC', payload: { url: musicList[index].url } }) //派发选择音乐事件，在视频组件中响应
+        this.play(musicList[index].url); //播放音乐
     };
     clearMusic() {
         this.setState({
             active: -1
         });
-        Store.getState()['music']={active:-1};
+        Store.getState()['music'] = { active: -1 }; //记录选择音乐
+        Store.dispatch({ type: 'SELECTEDMUSIC', payload: { url: '' } }) //派发选择音乐事件，在视频组件中响应
+        this.play(''); //暂停音乐
+    }
+
+    stop() {
+        if (!this.state.sound) {
+            return;
+        }
+        this.state.sound
+            .stop()
+            .release();
+        this.setState({ sound: null });
+    }
+
+
+    play(url) {
+        this.stop();
+        if (!!url) {
+            const s = new Sound(url, Sound.MAIN_BUNDLE, (e) => {
+                if (e) {
+                    console.log('error', e);
+                }
+                alert('eroor'+e);
+                s.setNumberOfLoops(-1);
+                s.play();
+            });
+            this.setState({ sound: s });
+        }
     }
 
     /* 渲染完成时执行 */
@@ -156,7 +188,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    title:{
+    title: {
         color: '#6C6C6C'
     },
     active: {
@@ -174,7 +206,7 @@ const styles = StyleSheet.create({
         borderColor: '#121212',
         borderWidth: 1
     },
-    text:{
+    text: {
         color: 'white',
         textAlign: 'center',
         justifyContent: 'center',
