@@ -42,14 +42,14 @@ const FilterMap = [
     'boxblur=2:1:cr=0:ar=0',
 ];
 
-const paperList = ['../../resources/assets/img/ys1.jpg',
-    '../../resources/assets/img/ys2.jpg',
-    '../../resources/assets/img/ys3.jpg',
-    '../../resources/assets/img/ys4.jpg',
-    '../../resources/assets/img/ys5.jpg',
-    '../../resources/assets/img/ys6.jpg',
-    '../../resources/assets/img/ys7.jpg',
-    '../../resources/assets/img/ys8.jpg']
+const paperList = ['http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_2.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_3.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_5.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_6.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_8.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_9.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_10.jpg',
+    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_11.jpg']
 
 export default class VedioView extends Component {
     constructor(props) {
