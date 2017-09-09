@@ -19,13 +19,19 @@ export default class Header extends Component {
         return (
             <View style={styles.container}>
                 <TouchableNativeFeedback onPress={this.checkEdit.bind(this, 1)}>
-                    <Text style={[styles.item,1 == this.state.editType ? {color:'red'} : '']}>滤镜</Text>
+                    <View style={[styles.center,{width:80,height:30}]}>
+                        <Text style={[styles.item,1 == this.state.editType ? {color:'red'} : '']}>滤镜</Text>
+                    </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.checkEdit.bind(this, 2)}>
-                    <Text style={[styles.item,2 == this.state.editType ? {color:'red'} : '']}>音乐</Text>
+                    <View style={[styles.center,{width:80,height:30}]}>
+                        <Text style={[styles.item,2 == this.state.editType ? {color:'red'} : '']}>音乐</Text>
+                    </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.checkEdit.bind(this, 3)}>
-                    <Text style={[styles.item,3 == this.state.editType ? {color:'red'} : '']}>贴纸</Text>
+                    <View style={[styles.center,{width:80,height:30}]}>
+                        <Text style={[styles.item,3 == this.state.editType ? {color:'red'} : '']}>贴纸</Text>
+                    </View>
                 </TouchableNativeFeedback>
             </View>
         );
@@ -51,5 +57,9 @@ const styles = StyleSheet.create({
     },
     item: {
         color: 'white'
+    },
+    center: {
+        justifyContent: 'space-around',
+        alignItems: 'center',
     }
 });

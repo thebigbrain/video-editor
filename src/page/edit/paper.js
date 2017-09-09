@@ -5,23 +5,36 @@ import {
     StyleSheet,
     Animated,
     TouchableNativeFeedback,
-    ScrollView
+    ScrollView,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Store from '../../store';
 
 const paperList = [{
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: '兔子',
+    url: require('../../../resources/assets/img/ys1.jpg')
 }, {
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: '小狗',
+    url: require('../../../resources/assets/img/ys2.jpg')
 }, {
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: '小熊',
+    url: require('../../../resources/assets/img/ys3.jpg')
 }, {
-    name: 'spider man',
-    url: 'http://www.baidu.com'
+    name: '老鼠',
+    url: require('../../../resources/assets/img/ys4.jpg')
+}, {
+    name: '公鸡',
+    url: require('../../../resources/assets/img/ys5.jpg')
+}, {
+    name: '母鸡',
+    url: require('../../../resources/assets/img/ys6.jpg')
+}, {
+    name: '山羊',
+    url: require('../../../resources/assets/img/ys7.jpg')
+}, {
+    name: '绵羊',
+    url: require('../../../resources/assets/img/ys8.jpg')
 }]
 export default class Paper extends Component {
     constructor(props) {
@@ -74,7 +87,7 @@ export default class Paper extends Component {
                                         testID={'paperButton' + i}
                                         onPress={this.onButtonPress.bind(this, i)}>
                                         <View style={[styles.button, i == this.state.active ? styles.active : '']}>
-                                            <Text style={styles.text}>{data.name.toUpperCase()}</Text>
+                                            <Image source={data.url} style={{width:58,height:58}}/>
                                         </View>
                                     </TouchableNativeFeedback>;
 
