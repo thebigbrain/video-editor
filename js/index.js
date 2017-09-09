@@ -20,6 +20,10 @@ export default class VE extends Component {
     this.state = {};
   }
 
+  componentWillUnmount () {
+    FFMpeg.kill();
+  }
+
   componentDidMount () {
     DeviceEventEmitter.addListener('start', function(e: Event) {
       console.log(e);
@@ -49,15 +53,21 @@ export default class VE extends Component {
   onPressAddLogo () {
     let logo = 'http://img.bss.csdn.net/201709070936311271.jpg';
     let source = this.cameraPickerRef.video.path;
-    let target = `/sdcard/temp/${new Date().getTime()}.mp4`;
+    let target = `VE-${new Date().getTime()}.mp4`;
     FFMpeg.addLogo(source, logo, target);
+  }
+
+  onPressAddFilter () {
+    let source = this.cameraPickerRef.video.path;
+    let target = `VE-${new Date().getTime()}.mp4`;
+    FFMpeg.run(`-f lavfi -i ${source} ${target}`);
   }
 
   render() {
     return (
       <View style={styles.container}>
         <CameraPicker ref={ (ref) => { this.cameraPickerRef = ref } }/>
-        <Button style={styles.button}
+        <Button
           onPress={this.onPressAddLogo.bind(this)}
           title="Add Logo"
           color="#841584"

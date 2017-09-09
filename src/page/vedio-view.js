@@ -68,7 +68,7 @@ export default class VedioView extends Component {
     onPressAddLogo() {
         let logo = 'http://img.bss.csdn.net/201709070936311271.jpg';
         let source = this.cameraPickerRef.video.path;
-        let target = `/sdcard/temp/${new Date().getTime()}.mp4`;
+        let target = `VE-${new Date().getTime()}.mp4`;
         FFMpeg.addLogo(source, logo, target);
     }
 }
