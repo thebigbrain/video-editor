@@ -23,10 +23,21 @@ const viewType = {
     circle: 6
 }
 
-const FilterMap = [,
+const FilterMap = [
+    ,
     'boxblur=2:1:cr=0:ar=0', 
     'drawbox=color=pink@0.5:t=max', 
-    'drawgrid=width=100:height=100:thickness=2:color=red@0.5'
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
+    'drawbox=color=pink@0.5:t=max', 
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
+    'boxblur=2:1:cr=0:ar=0',
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
+    'boxblur=2:1:cr=0:ar=0',
+    'drawbox=color=pink@0.5:t=max', 
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
+    'boxblur=2:1:cr=0:ar=0',
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
+    'boxblur=2:1:cr=0:ar=0',
 ];
 
 export default class VedioView extends Component {
@@ -36,8 +47,7 @@ export default class VedioView extends Component {
             viewType: viewType.fullScreen_vertical,
             paper: '',
             music: '',
-            filter: 0,
-            target: ''
+            filter: 0
         }
     }
     render() {
@@ -97,7 +107,6 @@ export default class VedioView extends Component {
         Store.subscribe('SAVEVEDIO', ((payload) => {
             let source = this.cameraPickerRef.video.path;
             let target = `VE-${new Date().getTime()}.mp4`;
-            this.setState({target: target});
             if(!!this.state.paper){
                 FFMpeg.addLogo(source, paper, target);
             }
