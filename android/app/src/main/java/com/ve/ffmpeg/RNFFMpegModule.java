@@ -1,11 +1,14 @@
 package com.ve.ffmpeg;
 
+import java.io.File;
+import android.os.Environment;
 // import android.widget.Toast;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
@@ -56,17 +59,53 @@ public class RNFFMpegModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void kill () {
+    ffmpeg.killRunningProcesses();
+  }
+
+  @ReactMethod
+  public void run(String args) {
+    if(ffmpeg.isFFmpegCommandRunning()){
+      sendEvent("error", "ffmpeg is running");
+    } else {
+      String[] cmd = args.split(" ");
+      cmd[cmd.length - 1] = fixPath(cmd[cmd.length - 1]);
+      if(cmd[cmd.length - 1].equals("")) return;
+      conversion(cmd);
+    }
+  }
+
+  @ReactMethod
   public void addLogo(String input, String logo, String output) {
-    String[] cmd = {
-      "-i",
-      input,
-      "-i",
-      logo,
-      "-filter_complex",
-      "overlay",
-      output
-    };
-    conversion(cmd);
+    // output = fixPath(output);
+    // if(!output.equals("")) {
+    //   String[] cmd = {
+    //     "-i",
+    //     input,
+    //     "-i",
+    //     logo,
+    //     "-filter_complex",
+    //     "overlay",
+    //     output
+    //   };
+    //   conversion(cmd);
+    // }
+    run("-i " + input + " -i " + logo + " -filter_complex overlay " + output);
+  }
+
+  private String fixPath(String output) {
+    File folder = new File(Environment.getExternalStorageDirectory() + 
+                             File.separator + "VE");
+    boolean success = true;
+    if (!folder.exists()) {
+        success = folder.mkdirs();
+    }
+    if (success) {
+      return folder.getPath() + File.separator + output;
+    } else {
+      sendEvent("error", "directory error");
+      return "";
+    }
   }
 
   public void conversion(String[] cmd) {
