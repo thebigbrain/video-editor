@@ -77,19 +77,6 @@ public class RNFFMpegModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void addLogo(String input, String logo, String output) {
-    // output = fixPath(output);
-    // if(!output.equals("")) {
-    //   String[] cmd = {
-    //     "-i",
-    //     input,
-    //     "-i",
-    //     logo,
-    //     "-filter_complex",
-    //     "overlay",
-    //     output
-    //   };
-    //   conversion(cmd);
-    // }
     run("-i " + input + " -i " + logo + " -filter_complex overlay " + output);
   }
 
@@ -108,7 +95,7 @@ public class RNFFMpegModule extends ReactContextBaseJavaModule {
     }
   }
 
-  public void conversion(String[] cmd) {
+  public void conversion(final String[] cmd) {
 
     try {
       // to execute "ffmpeg -version" command you just need to pass "-version"
@@ -136,7 +123,7 @@ public class RNFFMpegModule extends ReactContextBaseJavaModule {
 
         @Override
         public void onFinish() {
-          sendEvent("finish", "");
+          sendEvent("finish", cmd[cmd.length - 1]);
         }
       });
     } catch (FFmpegCommandAlreadyRunningException e) {

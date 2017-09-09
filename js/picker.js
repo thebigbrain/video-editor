@@ -31,6 +31,10 @@ export class CameraPicker extends Component {
 	    });
 	}
 
+	update(source) {
+		this.setState({source});
+	}
+
 	render() {
 		if(!this.state.source) return (<Text>loading...</Text>);
 		return (
