@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Store from '../../store';
 
-const filterButtons = ['OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1','OR','F1','F2','R1'];
+const filterButtons = ['原片','F1','F2','R1'];
 export default class Filter extends Component {
     constructor(props) {
         super(props);
