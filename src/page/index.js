@@ -14,6 +14,9 @@ export default class Index extends Component {
     this.state = {
       showText:true
     }
+  }
+
+  componentDidMount () {
     // 每1000毫秒对showText状态做一次取反操作
     setInterval(() => {
       this.setState(previousState => {
@@ -21,6 +24,7 @@ export default class Index extends Component {
       });
     }, 1000);
   }
+
   render() {
     return (
       <View style={styles.container}>

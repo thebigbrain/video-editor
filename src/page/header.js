@@ -17,9 +17,13 @@ export default class Header extends Component {
             <View style={styles.container}>
                 <Text style={styles.item}>滤镜</Text>
                 <Text style={styles.item}>音乐</Text>
-                <Text style={styles.item}>贴纸</Text>
+                <Text style={styles.item} onPress={this.stickImage}>贴纸</Text>
             </View>
         );
+    }
+
+    stickImage () {
+        
     }
 }
 

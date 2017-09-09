@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import Video from 'react-native-video';
-import { VideoPlayer } from './video-player';
+// import { VideoPlayer } from './video-player';
 
 export class CameraPicker extends Component {
 	constructor(props) {
@@ -37,7 +37,7 @@ export class CameraPicker extends Component {
 			<Video
 				style={styles.backgroundVideo}
 				source={{uri: this.state.source}}
-				resizeMode="cover" 
+				resizeMode="contain" 
        	repeat={true}
       />
 		);
@@ -47,9 +47,9 @@ export class CameraPicker extends Component {
 const styles = StyleSheet.create({
   backgroundVideo: {
     position: 'absolute',
-    left: 0,
     top: 0,
-    right: 0, 
+    left: 0,
+    right: 0,
     bottom: 0,
     backgroundColor: '#000'
   }
