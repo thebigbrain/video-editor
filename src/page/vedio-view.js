@@ -42,14 +42,14 @@ const FilterMap = [
     'boxblur=2:1:cr=0:ar=0',
 ];
 
-const paperList = ['http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_2.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_3.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_5.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_6.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_8.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_9.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_10.jpg',
-    'http://image27.360doc.com/DownloadImg/2011/04/1517/10943604_11.jpg']
+const paperList = ['http://image.tianjimedia.com/uploadImages/2011/160/CLZ4E2B3V2G0.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/5H2W47FKBNMX.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/UODWE0LN56L5.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/MXAXCL54W24Y.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/C07Y00Y75391.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/KGNG0RCMZ78J.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/I21YC715Q6J0.jpg',
+    'http://image.tianjimedia.com/uploadImages/2011/160/58V45DZN9G09.jpg']
 
 export default class VedioView extends Component {
     constructor(props) {

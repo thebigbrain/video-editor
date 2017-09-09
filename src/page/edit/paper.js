@@ -25,16 +25,16 @@ const paperList = [{
     url: require('../../../resources/assets/img/ys4.jpg')
 }, {
     name: '公鸡',
-    url: require('../../../resources/assets/img/ys5.jpg')
+    url: require('http://image.tianjimedia.com/uploadImages/2011/160/C07Y00Y75391.jpg')
 }, {
     name: '母鸡',
-    url: require('../../../resources/assets/img/ys6.jpg')
+    url: require('http://image.tianjimedia.com/uploadImages/2011/160/KGNG0RCMZ78J.jpg')
 }, {
     name: '山羊',
     url: require('../../../resources/assets/img/ys7.jpg')
 }, {
     name: '绵羊',
-    url: require('../../../resources/assets/img/ys8.jpg')
+    url: require('http://image.tianjimedia.com/uploadImages/2011/160/58V45DZN9G09.jpg')
 }]
 export default class Paper extends Component {
     constructor(props) {
