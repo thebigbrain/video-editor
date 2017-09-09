@@ -6,7 +6,8 @@ import {
     StyleSheet,
     Button,
     Image,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    Dimensions
 } from 'react-native';
 
 import { CameraPicker } from '../../js/picker';
@@ -108,6 +109,7 @@ export default class VedioView extends Component {
     }
 }
 
+let {width,height} = Dimensions.get("window");
 const styles = StyleSheet.create({
     container: {
         flex:1,
@@ -118,7 +120,8 @@ const styles = StyleSheet.create({
     },
     paper: {
         position: 'absolute',
-        bottom: 0,
+        top: 0,
+        left: (width - (width / height) * (height - 60 - 200 - 60)) / 2,
         width:60,
         height:60
     }
