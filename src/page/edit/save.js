@@ -40,6 +40,7 @@ export default class save extends Component {
     }
 
     save() {
+        Store.dispatch({ type: 'CHECKEDIT', payload: { editType: 3 } });
         Store.dispatch({type:'SAVEVEDIO',payload:{}}); //派发保存视频动作
     }
 

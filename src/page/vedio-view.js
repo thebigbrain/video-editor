@@ -29,24 +29,16 @@ const FilterMap = [
     ,
     'boxblur=2:1:cr=0:ar=0',
     'drawbox=color=pink@0.5:t=max',
-    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
-    'drawbox=color=pink@0.5:t=max',
-    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
-    'boxblur=2:1:cr=0:ar=0',
-    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
-    'boxblur=2:1:cr=0:ar=0',
-    'drawbox=color=pink@0.5:t=max',
-    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
-    'boxblur=2:1:cr=0:ar=0',
-    'drawgrid=width=100:height=100:thickness=2:color=red@0.5',
-    'boxblur=2:1:cr=0:ar=0',
+    'drawgrid=width=100:height=100:thickness=2:color=red@0.5'
 ];
 
 const paperList = ['http://image.tianjimedia.com/uploadImages/2011/160/CLZ4E2B3V2G0.jpg',
     'http://image.tianjimedia.com/uploadImages/2011/160/5H2W47FKBNMX.jpg',
     'http://image.tianjimedia.com/uploadImages/2011/160/UODWE0LN56L5.jpg',
     'http://image.tianjimedia.com/uploadImages/2011/160/MXAXCL54W24Y.jpg',
-    'http://image.tianjimedia.com/uploadImages/2011/160/I21YC715Q6J0.jpg']
+    'http://image.tianjimedia.com/uploadImages/2011/160/I21YC715Q6J0.jpg'];
+
+let currentSource = '';
 
 export default class VedioView extends Component {
     constructor(props) {
@@ -104,6 +96,7 @@ export default class VedioView extends Component {
             console.log(target);
             this.setState({ modalVisible: true });
             this.cameraPickerRef.update(target);
+            currentSource = target;
             Store.dispatch({ type: 'CREATEVEDIO', payload: { showText: true, section: 4 } });
             Store.dispatch({ type: 'CLEARPAPER', payload: {} });
         });
@@ -127,10 +120,12 @@ export default class VedioView extends Component {
         }).bind(this))
 
         Store.subscribe('SAVEVEDIO', ((payload) => {
-            let source = this.cameraPickerRef.video.path;
+            let source = currentSource || this.cameraPickerRef.video.path;
+            console.warn(source);
             let target = `VE-${new Date().getTime()}.mp4`;
             if (-1 != this.state.pindex) {
-                FFMpeg.addLogo(source, paperList[this.state.pindex], target);
+                // FFMpeg.addLogo(source, , target);
+                FFMpeg.run(`-i ${source} -i ${paperList[this.state.pindex]} -filter_complex [1]scale=w=58:h=58[tmp];[0][tmp]overlay ${target}`);
             }
             if (!!this.state.music) {
                 //add bgm
@@ -140,13 +135,6 @@ export default class VedioView extends Component {
                 FFMpeg.run(`-i ${source} -vf ${FilterMap[this.state.filter]} ${target}`);
             }
         }).bind(this))
-    }
-
-    onPressAddLogo() {
-        let logo = 'http://img.bss.csdn.net/201709070936311271.jpg';
-        let source = this.cameraPickerRef.video.path;
-        let target = `VE-${new Date().getTime()}.mp4`;
-        FFMpeg.addLogo(source, logo, target);
     }
 }
 

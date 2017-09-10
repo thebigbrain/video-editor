@@ -16,7 +16,7 @@ class Store {
 		const getState = () => state;
 
 		const dispatch = (action) => {
-			listeners[action.type].forEach(listener => listener(action.payload));
+			(listeners[action.type] || []).forEach(listener => listener(action.payload));
 		};
 
 		const subscribe = (type,listener) => {

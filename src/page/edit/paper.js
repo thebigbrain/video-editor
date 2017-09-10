@@ -119,7 +119,7 @@ export default class Paper extends Component {
         ]).start();
         
         Store.subscribe('CLEARPAPER', ((payload) => {
-            this.setState({ active: -1 })
+            this.clearPaper();
         }).bind(this))
     }
 
