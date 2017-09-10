@@ -73,3 +73,6 @@
  * 在release发行版中启用Proguard来减小 to shrink the Java bytecode in release builds.
  */
 def enableProguardInReleaseBuilds = true
+
+-keep class android.text {* ;}
+-dontwarn android.text.*
