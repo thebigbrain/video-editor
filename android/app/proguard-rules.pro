@@ -68,3 +68,8 @@
 -dontwarn java.nio.file.*
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn okio.**
+
+/**
+ * 在release发行版中启用Proguard来减小 to shrink the Java bytecode in release builds.
+ */
+def enableProguardInReleaseBuilds = true
